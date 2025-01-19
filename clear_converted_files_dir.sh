@@ -1,7 +1,8 @@
 #1. Clears the copied files in ./converted_files
 
-destructive_delete () {
-  local CONVERTED_FILES_DIR = './converted_files'
+destructive_delete ()
+{
+  local CONVERTED_FILES_DIR='./converted_files'
 
   while true; do
       read -p "Delete all the files in converted_files/ dir? [yn] " yn
@@ -18,8 +19,5 @@ destructive_delete () {
 if [ "$(whoami)" == 'patrickschreiber' ]; then
   destructive_delete
 else
-echo "Gotta be the correct user"; exit 1;
+  echo "Gotta be the correct user"; exit 1;
 fi
-
-
-
