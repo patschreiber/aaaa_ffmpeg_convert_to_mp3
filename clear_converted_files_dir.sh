@@ -7,7 +7,8 @@ destructive_delete ()
   while true; do
       read -p "Delete all the files in converted_files/ dir? [yn] " yn
       case $yn in
-          [Yy]* ) echo "Deleting all files in converted_files/ dir..."; rm -rf ./converted_files/*; echo "...done!"; break;;
+          # rm all files in converted_files, then re-add gitkeep
+          [Yy]* ) echo "Deleting all files in converted_files/ dir..."; rm -rf ./$CONVERTED_FILES_DIR/*; touch $CONVERTED_FILES_DIR/.gitkeep ; echo "...done!"; break;;
           [Nn]* ) echo "cool, not deleting."; exit 0;;
           * ) echo "Yes or no, dawg.";;
       esac
