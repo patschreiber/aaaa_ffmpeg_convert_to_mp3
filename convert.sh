@@ -9,6 +9,11 @@
 TARGET_PATH=$1
 dt=$(date '+%d/%m/%Y %H:%M:%S');
 
+if [ -z "$1" ]; then
+  echo "need a path, bro."
+  exit 1
+fi
+
 # INFILE = $2
 # OUTFILE = $3
 # ffmpeg -n -i $INFILE -c:a libmp3lame -q:a 1 -ar 44100 -map_metadata 0 -map_metadata 0:s:0 -id3v2_version 3 -vn $OUTFILE.mp3
@@ -27,23 +32,48 @@ run ()
       case $yn in
           # rm all files in converted_files, then re-add gitkeep
           # [Yy]* ) echo "Deleting all files in converted_files/ dir..."; rm -rf ./$CONVERTED_FILES_DIR/*; touch $CONVERTED_FILES_DIR/.gitkeep ; echo "...done!"; break;;
-          [Yy]* ) cp_files; break;;
+          [Yy]* ) aaaa; break;;
           [Nn]* ) echo "cool, not copying."; exit 0;;
           * ) echo "Yes or no, dawg.";;
       esac
   done
 }
 
+# The main prgm. Didn't know what to call this function. Guess it could have been main()...
+aaaa ()
+{
+  cp_files
+  make_textfile
+  ffmpeg_convert_files
+  echo "Done converting the files. You should probably run the delete_converted_files_dir when you're done copying the .mp3 files from there."
+  exit 0
+}
+
+#2. Copy the contents of TARGET_PATH into converted_files
 cp_files ()
 {
   #2. Copy the contents of TARGET_PATH into converted_files
-  # cp $TARGET_PATH ./converted_files
+  echo "Copying the contents of $TARGET_PATH into ./converted_files..."
+  echo "(The size is $(du -hs $TARGET_PATH))."
+  cp -R $TARGET_PATH ./converted_files/
+  echo "...done!"
+}
 
-  #3. Make text file with original target path (as a reminder)
+#3. Make text file with original target path (as a reminder)
+make_textfile ()
+{
+  # make file then add datetime and target path to file.
+  echo "Making original_path.txt file with datetime and target path..."
   touch ./converted_files/original_path.txt && echo "${dt} ${TARGET_PATH}" >> ./converted_files/original_path.txt
+  echo "...done!"
+}
 
-  #4. Batch convert with subdirs
-  # find converted_files -exec ffmpeg -i {} {}.mp3 \;
+#4. Batch convert wav files (and in subdirs).
+ffmpeg_convert_files ()
+{
+  echo "Running ffmpeg to convert wav files to mp3, recursively..."
+  find ./converted_files/**/*.wav -exec ffmpeg -i {} {}.mp3 \;
+  echo "...done!"
 }
 
 # Runs the prgm.
