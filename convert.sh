@@ -4,7 +4,7 @@
 #2. Copies the contents of that dir into converted_files
 #3. Makes text file with original target path (as a reminder)
 #4. Operates on the files in converted_files
-#5.
+#5. TODO: ps - Seems to not handle recursive subfolders well, which is annoying
 
 TARGET_PATH=$1
 dt=$(date '+%d/%m/%Y %H:%M:%S');
