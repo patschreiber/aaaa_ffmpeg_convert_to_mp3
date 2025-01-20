@@ -54,7 +54,7 @@ cp_files ()
 {
   #2. Copy the contents of TARGET_PATH into converted_files
   echo "Copying the contents of $TARGET_PATH into ./converted_files..."
-  echo "(The size is $(du -hs $TARGET_PATH))."
+  echo "(The size is $(du -hs $TARGET_PATH))..."
   cp -R $TARGET_PATH ./converted_files/
   echo "...done!"
 }
