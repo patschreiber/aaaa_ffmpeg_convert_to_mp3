@@ -14,17 +14,6 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-# INFILE = $2
-# OUTFILE = $3
-# ffmpeg -n -i $INFILE -c:a libmp3lame -q:a 1 -ar 44100 -map_metadata 0 -map_metadata 0:s:0 -id3v2_version 3 -vn $OUTFILE.mp3
-
-#2. Copy the contents of TARGET_PATH into converted_files
-# cp $TARGET_PATH ./converted_files
-
-# Batch convert with subdirs
-# find converted_files -exec ffmpeg -i {} {}.mp3 \;
-
-
 run ()
 {
   while true; do
@@ -73,6 +62,13 @@ ffmpeg_convert_files ()
 {
   echo "Running ffmpeg to convert wav files to mp3, recursively..."
   find ./converted_files/**/*.wav -exec ffmpeg -i {} {}.mp3 \;
+
+  # gtfor i in *.wav; do ffmpeg -i "$i" -f mp3 "${i%}.mp3"; done
+  # The above command creates files that are named wav.mp3.
+  # To get files with the correct file extension, change the command to:
+  ## for i in *.wav; do ffmpeg -i "$i" -f mp3 "${i%.*}.mp3"; done
+  # i.e. add .* after i%.
+
   echo "...done!"
 }
 
