@@ -9,3 +9,6 @@
 
 After it's done converting, you'll probably want to search for `.mp3` in
 explorer, or finder, or w/e.
+
+To see the diff between folders if you're unsure:
+`diff /Volumes/MUSIC_USB/ ./converted_files/MUSIC_USB >> ./diff_files.txt`
